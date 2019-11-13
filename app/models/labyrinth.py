@@ -43,23 +43,11 @@ class Labyrinth:
         The structure of a labyrinth as a Tree composed of nodes with 4 branches
         (one for each direction). It is randomly generated based on
         """
+        pass
         unvisited_cells = set([(x, y) for x in range(length) for y in range(width)])
         visited_cells = set()
         stack = []
         current = Position()
-
-        while len(visited_cells) < length * width:
-            directions = self._has_unvisited_neighbors(
-                current.coordinates, length, width, visited_cells
-            )
-            if len(directions) > 0:
-                next_direction = choice(directions)
-                if len(directions) > 1:
-                    stack.append(current.coordinates)
-                self.tree.add_node(current.path, next_direction, "P")
-                current = current.__add__(current, next_direction)
-            elif stack:
-                current = stack.pop()
 
 
 if __name__ == "__main__":

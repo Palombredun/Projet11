@@ -1,22 +1,11 @@
-from .position import Position
+# from .position import Position
+from .path import Path
 
 
-class Hero(Position):
-    def __init__(self, position: list = []):
-        super().__init__(position)
+class Hero(Path):
+    def __init__(self, path: list = []):
+        super().__init__(path)
         self.items = set()
-
-    def up(self):
-        return self.position.append("u")
-
-    def down(self):
-        return self.position.append("d")
-
-    def right(self):
-        return self.position.append("r")
-
-    def left(self):
-        return self.position.append("l")
 
     def add_item(self, item):
         if item in ["needle", "tube", "ether"]:

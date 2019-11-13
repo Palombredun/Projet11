@@ -1,5 +1,6 @@
 from app.models.node import Node
 
+
 class TestNode:
     node = Node("foo")
 
