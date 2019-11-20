@@ -1,3 +1,3 @@
 LENGTH = 15
 WIDTH = 15
-PATH_CHAR = "P"
+PATH_CHAR = "p"

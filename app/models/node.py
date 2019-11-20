@@ -1,5 +1,5 @@
 class Node:
-    def __init__(self, data: str):
+    def __init__(self, data: str) -> "Node":
         self.data = data
         self.right = None
         self.left = None
@@ -7,4 +7,4 @@ class Node:
         self.down = None
 
     def __str__(self):
-        return self.data
+        return str(self.data)

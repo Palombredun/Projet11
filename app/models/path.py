@@ -1,16 +1,23 @@
 class Path:
-    def __init__(self, path: list) -> 'Path':
+    def __init__(self, path: str) -> "Path":
         self.path = path
 
-    def __add__(self, direction: tuple) -> "Position":
+    def __iadd__(self, direction: tuple) -> "Path":
         if direction == (1, 0):
-            self.path.append("d")
+            new_path = self.path + "d"
+            return Path(new_path)
         elif direction == (-1, 0):
-            self.path.append("u")
+            new_path = self.path + "u"
+            return Path(new_path)
         elif direction == (0, -1):
-            self.path.append("l")
+            new_path = self.path + "l"
+            return Path(new_path)
         elif direction == (0, 1):
-            self.path.append("r")
+            new_path = self.path + "r"
+            return Path(new_path)
         else:
             raise ValueError("Wrong direction")
         return self
+
+    def __str__(self):
+        return self.path

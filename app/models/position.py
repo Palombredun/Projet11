@@ -6,15 +6,6 @@ class Position:
         self.x = x
         self.y = y
 
-    def __repr__(self):
-        return str(self.x, self.y)
-
-    def __add__(self, direction: tuple) -> "Position":
-        x = self.x + direction[0]
-        y = self.y + direction[1]
-        new_position = Position(x, y)
-        return new_position
-
     def up(self) -> "Position":
         x = self.x
         y = self.y
@@ -34,3 +25,13 @@ class Position:
         x = self.x
         y = self.y
         return Position(x, y + 1)
+
+    def __str__(self):
+        string = "(" + str(self.x) + ", " + str(self.y) + ")"
+        return string
+
+    def __iadd__(self, direction: tuple) -> "Position":
+        x = self.x + direction[0]
+        y = self.y + direction[1]
+        new_position = Position(x, y)
+        return new_position

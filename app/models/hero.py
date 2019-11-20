@@ -2,11 +2,13 @@
 from .path import Path
 
 
-class Hero(Path):
-    def __init__(self, path: list = []):
-        super().__init__(path)
+class Hero:
+    def __init__(self):
+        self.path = Path("")
         self.items = set()
 
     def add_item(self, item):
         if item in ["needle", "tube", "ether"]:
             self.items.add(item)
+        else:
+            raise ValueError("This item is not needed")
