@@ -61,7 +61,7 @@ class Tree:
     def inorderTraversal(self, root):
         if root:
             print(root.data)
-            self.inorderTraversal(root.left)
             self.inorderTraversal(root.right)
-            self.inorderTraversal(root.up)
             self.inorderTraversal(root.down)
+            self.inorderTraversal(root.left)
+            self.inorderTraversal(root.up)

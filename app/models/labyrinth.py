@@ -1,4 +1,4 @@
-from random import choice
+from random import choice, seed
 
 import config.settings as constants
 
@@ -18,6 +18,16 @@ class Labyrinth:
         self.generate_labyrinth()
 
     def _has_unvisited_neighbors(self, cell: "Position", visited_cells: set) -> list:
+        """
+        input :
+          - the current position
+          - the visited cells in the grid
+        output :
+          - all directions (minimum 0, maximum 3) where there is a cell available
+        A cell is considered available if its position is comprised between 0 (included)
+        and self.length or self.width respectively. It must also not be part of the
+        visited_cells set.
+        """
         unvisited_directions = []
 
         if (cell.x - 1, cell.y) not in visited_cells and cell.x - 1 >= 0:
@@ -43,9 +53,9 @@ class Labyrinth:
         visited_cells = set()
         current_pos = Position(0, 0)
         current_path = Path("")
-        stack = []
-        i = 0
-        while len(visited_cells) < self.length * self.width:
+        stack = [(current_pos, current_path)]
+
+        while len(stack) > 0:
             
             directions = self._has_unvisited_neighbors(current_pos, visited_cells)
             if directions:
@@ -53,13 +63,13 @@ class Labyrinth:
                 next_direction = choice(directions)
                 if len(directions) > 1:
                     stack.append((current_pos, current_path))
+                    _stack_.append((current_pos.x, current_pos.y))
                 
                 self.maze.add_node(current_path.path, next_direction, "p")
                 
                 visited_cells.add((current_pos.x, current_pos.y))
                 current_pos += next_direction
                 current_path += next_direction
-            
             else:
                 current_pos, current_path = stack.pop()
 
