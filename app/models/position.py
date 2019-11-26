@@ -16,10 +16,11 @@ class Position:
         return string
 
     def __add__(self, direction: tuple) -> "Position":
-        if type(direction[0]) is not int or type(direction[1]) is not int:
-            raise TypeError ("Wrong type of direction")
-        if direction not in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
-            raise ValueError("Wrong values for the direction")
+        """
+        input :
+        a tuple direction, contained in [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        which matches a direction (left, right, up, down). 
+        """
 
         x = self.x + direction[0]
         y = self.y + direction[1]

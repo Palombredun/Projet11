@@ -4,10 +4,7 @@ class Node:
         Creates an object Node, which contains 4 directions and a attribute data.
         The 4 directions are later used to be linked to other nodes.
         """
-
-        if type(data) is not str:
-            raise TypeError("Wrong type for the data")
-
+        
         self.data = data
         self.right = None
         self.left = None

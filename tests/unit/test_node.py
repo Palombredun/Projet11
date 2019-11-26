@@ -14,9 +14,6 @@ def test_create_node(base_node):
     assert base_node.up == None
     assert base_node.down == None
 
-def test_create_node_wrong_type():
-    with pytest.raises(TypeError):
-        node = Node(5)
 
 def test_change_node_data(base_node):
     base_node.data = "bar"

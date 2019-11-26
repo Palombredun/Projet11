@@ -54,7 +54,3 @@ class Labyrinth:
             else:
                 self.maze.leafs.add(path.path)
                 pos, path = stack.pop()
-
-
-if __name__ == "__main__":
-    lab = Labyrinth()

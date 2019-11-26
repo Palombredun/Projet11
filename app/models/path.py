@@ -10,18 +10,12 @@ class Path:
         self.path = path
 
     def __add__(self, direction: tuple) -> "Path":
-        if type(direction) is not tuple:
-            raise TypeError("Wrong type for the direction")
-
-        if len(direction) != 2:
-            raise ValueError("Wrong number of arguments for the direction")
-
-        if type(direction[0]) is not int or type(direction[1]) is not int:
-            raise TypeError("Wrong type for one of the value of the direction")
-
-        if direction not in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
-            raise ValueError("Wrong direction")
-
+        """
+        input :
+        a tuple direction, contained in [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        which matches a direction (left, right, up, down). 
+        It is added to the current path.    
+        """
         if direction == (1, 0):
             new_path = self.path + "d"
             return Path(new_path)
