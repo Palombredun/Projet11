@@ -30,13 +30,13 @@ class Game:
         """
         for obj in ["ether", "needle", "tube"]:
             if len(leaves) == 1:
-                self.path_objects[obj] = self.draw_path(leaves, 1)
+                self.path_objects[obj] = self._draw_path(leaves, 1)
             elif len(leaves) == 2:
-                self.path_objects[obj] = self.draw_path(leaves, 2)
+                self.path_objects[obj] = self._draw_path(leaves, 2)
             else:
-                self.path_objects[obj] = self.draw_path(leaves, 3)
+                self.path_objects[obj] = self._draw_path(leaves, 3)
 
-    def draw_path(self, leaves: list, nb_leaves: int):
+    def _draw_path(self, leaves: list, nb_leaves: int):
         """
         input : 
           - list of leaves
@@ -49,7 +49,7 @@ class Game:
         output :
         path chosen randomly, it cannot have been previously drawn.
         """
-        if nb_leaves == 3:
+        if nb_leaves >= 3:
             while True:
                 path = choice(leaves)
                 if path not in self.path_used:
