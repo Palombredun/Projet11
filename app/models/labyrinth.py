@@ -16,7 +16,7 @@ class Labyrinth:
         """
         self.length = constants.LENGTH
         self.width = constants.WIDTH
-        self.maze = Tree("p")
+        self.tree = Tree("p")
 
         self.create()
 
@@ -45,12 +45,12 @@ class Labyrinth:
 
             if len(directions) > 0:
                 next_dir = choice(directions)
-                self.maze.add_node(path.path, next_dir, "p")
+                self.tree.add_node(path.path, next_dir, "p")
                 pos += next_dir
                 path += next_dir
 
                 stack.append((pos, path))
                 visited_cells.add((pos.x, pos.y))
             else:
-                self.maze.leafs.add(path.path)
+                self.tree.leaves.append(path.path)
                 pos, path = stack.pop()

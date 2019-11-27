@@ -1,4 +1,4 @@
-from random import choice, choices
+from random import choice, choices, randint
 
 from app.models.labyrinth import Labyrinth
 from app.models.hero import Hero
@@ -11,80 +11,60 @@ class Game:
         self.victory = False
         self.path_used = []
 
-    def place_enemy(self, maze: "Labyrinth"):
-        if len(maze.leafs) < 4:
-            index = choice(len(maze.leafs[0]))
-            self.path_enemy = maze.leafs[:index]
+    def place_enemy(self, tree: "Tree"):
+        if len(tree.leaves) < 4:
+            index = choice(len(tree.leaves[0]))
+            self.path_enemy = tree.leaves[:index]
             self.path_used.append(self.path_enemy)
         else:
-            self.path_enemy = ''.join(choices(maze.leafs))
+            self.path_enemy = ''.join(choices(tree.leaves))
             self.path_used.append(self.path_enemy)
 
-
-    def place_objects(self, maze: "Labyrinth"):
+    def place_objects(self, tree: "Tree"):
         """
         If there is only one path, draw the position of the position between
         the start and the position in front of the enemy.
-        If the number of leafs is equal to 2 or 3, draw the path of the objects
+        If the number of leaves is equal to 2 or 3, draw the path of the objects
         in their path.
         Else, the objects are placed on a leaf of the tree.
         """
+        for obj in ["ether", "needle", "tube"]:
+            if len(tree.leaves) == 1:
+                self.path_objects[obj] = self.draw_path(tree.leaves, 1)
+            elif len(tree.leaves) == 2:
+                self.path_objects[obj] = self.draw_path(tree.leaves, 2)
+            else:
+                self.path_objects[obj] = self.draw_path(tree.leaves, 3)
 
-        if len(maze.leafs) == 1:
-            self.path_objects['ether'] = self.draw_path(maze.leafs, 1)
-            self.path_objects['needle'] = self.draw_path(maze.leafs, 1)
-            self.path_objects['tube'] = self.draw_path(maze.leafs, 1)
-        elif len(maze.leafs) == 2:
-            self.path_objects['ether'] = self.draw_path(maze.leafs, 2)
-            self.path_objects['needle'] = self.draw_path(maze.leafs, 2)
-            self.path_objects['tube'] = self.draw_path(maze.leafs, 2)
-        elif len(maze.leafs) == 3:
-            self.path_objects['ether'] = self.draw_path(maze.leafs, 3)
-            self.path_objects['needle'] = self.draw_path(maze.leafs, 3)
-            self.path_objects['tube'] = self.draw_path(maze.leafs, 3)
-        else:
-            # CHOIX
+    def draw_path(self, leaves: list, nb_leaves: int):
+        """
+        input : 
+          - list of leaves
+          - number of leaves in the list
+        If the number of leaves is equal or superior to three, 
+        each object is placed on one of the leaves.
+        If this number is smaller, the objects are randomly placed on
+        the path of the leaves.
         
-        elif len(maze.leafs) == 3:
-            leaf = choice([1, 2, 3])
-            if leaf == 1:
-                index = choice(range(0, len(maze.leafs[0])))
-                self.path_objects["ether"] = maze.leafs[0][:index]
-            elif leaf == 2:
-                index = choice(range(0, len(maze.leafs[1])))
-                self.path_objects["ether"] = maze.leafs[1][:index]
-            else:
-                index = choice(range(0, len(maze.leafs[1])))
-                self.path_objects["ether"] = maze.leafs[1][:index]
+        output :
+        path chosen randomly, it cannot have been previously drawn.
+        """
+        if nb_leaves == 3:
+            while True:
+                path = choice(leaves)
+                if path not in self.path_used:
+                    break
+            return path
 
-            leaf = choice([1, 2, 3])
-            if leaf == 1:
-                index = choice(range(0, len(maze.leafs[0])))
-                self.path_objects["ether"] = maze.leafs[0][:index]
-            elif leaf == 2:
-                index = choice(range(0, len(maze.leafs[1])))
-                self.path_objects["ether"] = maze.leafs[1][:index]
-            else:
-                index = choice(range(0, len(maze.leafs[1])))
-                self.path_objects["ether"] = maze.leafs[1][:index]
+        i = randint(0, nb_leaves-1)
+        path = ""
+        while True:
+            index = randint(0, len(leaves[i]))
+            path = leaves[i][:index]
+            if path not in self.path_used:
+                break
+        return path
 
-            leaf = choice([1, 2, 3])
-            if leaf == 1:
-                index = choice(range(0, len(maze.leafs[0])))
-                self.path_objects["ether"] = maze.leafs[0][:index]
-            elif leaf == 2:
-                index = choice(range(0, len(maze.leafs[1])))
-                self.path_objects["ether"] = maze.leafs[1][:index]
-            else:
-                index = choice(range(0, len(maze.leafs[1])))
-                self.path_objects["ether"] = maze.leafs[1][:index]
-
-
-        else:
-            indexes = choices(maze.leafs)
-            self.path_objects["ether"] = path[indexes]
-            self.path_objects["tube"] = path[indexes]
-            self.path_objects["needle"] = path[indexes]
 
     def test_victory(self, hero):
         if (hero.path == self.path_enemy) and (

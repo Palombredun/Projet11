@@ -7,7 +7,7 @@ class Tree:
         Creates an object Tree, made of Nodes (with 4 directions).
         """
         self.root = Node(value)
-        self.leafs = set()
+        self.leaves = list()
 
     def huffman_traversal(self, path: str) -> Node:
         """
