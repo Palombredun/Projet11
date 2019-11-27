@@ -11,7 +11,7 @@ from app.controllers.game import Game
 
 game = Game()
 maze = Labyrinth()
-game.place_enemy(maze.tree)
+game.place_enemy(maze.tree.leaves)
 game.place_objects(maze.tree)
 print("\npath objects :", game.path_objects)
 print("path enemy : ", game.path_enemy)

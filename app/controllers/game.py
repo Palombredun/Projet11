@@ -6,18 +6,18 @@ from app.models.hero import Hero
 
 class Game:
     def __init__(self):
-        self.path_enemy = None
-        self.path_objects = {}
         self.victory = False
+        self.path_enemy = str()
+        self.path_objects = {}
         self.path_used = []
 
-    def place_enemy(self, tree: "Tree"):
-        if len(tree.leaves) < 4:
-            index = choice(len(tree.leaves[0]))
-            self.path_enemy = tree.leaves[:index]
+    def place_enemy(self, leaves: list):
+        if len(leaves) < 4:
+            index = choice(len(leaves[0]))
+            self.path_enemy = leaves[:index]
             self.path_used.append(self.path_enemy)
         else:
-            self.path_enemy = ''.join(choices(tree.leaves))
+            self.path_enemy = ''.join(choices(leaves))
             self.path_used.append(self.path_enemy)
 
     def place_objects(self, tree: "Tree"):

@@ -13,7 +13,7 @@ def basic_tree():
 def test_init_tree(basic_tree):
     assert type(basic_tree.root) is Node
     assert basic_tree.root.data == "start"
-    assert basic_tree.leafs == set()
+    assert basic_tree.leaves == list()
 
 
 def test_huffman_traversal(basic_tree):
