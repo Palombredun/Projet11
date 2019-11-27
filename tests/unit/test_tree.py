@@ -9,10 +9,12 @@ def basic_tree():
     tree = Tree("start")
     return tree
 
+
 def test_init_tree(basic_tree):
     assert type(basic_tree.root) is Node
     assert basic_tree.root.data == "start"
     assert basic_tree.leafs == set()
+
 
 def test_huffman_traversal(basic_tree):
     basic_tree.add_node(path="", direction=(0, -1), value="path")
@@ -22,9 +24,11 @@ def test_huffman_traversal(basic_tree):
     current = basic_tree.huffman_traversal("lluu")
     assert current.data == "path"
 
+
 def test_huffman_traversal_wrong_path_type(basic_tree):
     with pytest.raises(TypeError):
         basic_tree.huffman_traversal(255)
+
 
 def test_huffman_traversal_wrong_path(basic_tree):
     basic_tree.add_node(path="", direction=(0, -1), value="path")
@@ -34,12 +38,14 @@ def test_huffman_traversal_wrong_path(basic_tree):
     with pytest.raises(ValueError):
         current = basic_tree.huffman_traversal("lduu")
 
+
 def test_add_node_left(basic_tree):
     basic_tree.add_node(path="", direction=(0, -1), value="path")
     assert type(basic_tree.root.left) is Node
     assert basic_tree.root.left.data == "path"
     assert basic_tree.root.left.right.data == "start"
     assert type(basic_tree.root.left.right) is Node
+
 
 def test_add_node_right(basic_tree):
     basic_tree.add_node(path="", direction=(0, 1), value="path")
@@ -48,12 +54,14 @@ def test_add_node_right(basic_tree):
     assert basic_tree.root.right.left.data == "start"
     assert type(basic_tree.root.right.left) is Node
 
+
 def test_add_node_up(basic_tree):
     basic_tree.add_node(path="", direction=(-1, 0), value="path")
     assert type(basic_tree.root.up) is Node
     assert basic_tree.root.up.data == "path"
     assert basic_tree.root.up.down.data == "start"
     assert type(basic_tree.root.up.down) is Node
+
 
 def test_add_node_down(basic_tree):
     basic_tree.add_node(path="", direction=(1, 0), value="path")

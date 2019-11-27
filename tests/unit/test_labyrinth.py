@@ -17,12 +17,3 @@ def test_init_labyrinth(base_lab):
     assert base_lab.length == constants.LENGTH
     assert base_lab.width == constants.WIDTH
     assert base_lab.maze.root.data == "p"
-
-def inOrderTraversal(root, counter):
-    if root:
-        print(counter)
-        counter += 1
-        inOrderTraversal(root.left, counter)
-        inOrderTraversal(root.right, counter)
-        inOrderTraversal(root.up, counter)
-        inOrderTraversal(root.down, counter)

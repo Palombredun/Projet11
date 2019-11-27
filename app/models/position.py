@@ -1,4 +1,3 @@
-
 class Position:
     def __init__(self, x: int, y: int) -> None:
         """
@@ -7,7 +6,7 @@ class Position:
         """
         if type(x) is not int or type(y) is not int:
             raise TypeError("Wrong type for x or y")
-            
+
         self.x = x
         self.y = y
 

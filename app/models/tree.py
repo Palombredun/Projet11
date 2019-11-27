@@ -28,7 +28,7 @@ class Tree:
 
             if not current:
                 raise ValueError("Error in the path : {} is not valid", branch)
-            
+
             if branch == "l":
                 current = current.left
             elif branch == "r":
