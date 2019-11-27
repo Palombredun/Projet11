@@ -20,21 +20,21 @@ class Game:
             self.path_enemy = ''.join(choices(leaves))
             self.path_used.append(self.path_enemy)
 
-    def place_objects(self, tree: "Tree"):
+    def place_objects(self, leaves: list):
         """
         If there is only one path, draw the position of the position between
         the start and the position in front of the enemy.
         If the number of leaves is equal to 2 or 3, draw the path of the objects
         in their path.
-        Else, the objects are placed on a leaf of the tree.
+        Else, the objects are placed on a leaf of the 
         """
         for obj in ["ether", "needle", "tube"]:
-            if len(tree.leaves) == 1:
-                self.path_objects[obj] = self.draw_path(tree.leaves, 1)
-            elif len(tree.leaves) == 2:
-                self.path_objects[obj] = self.draw_path(tree.leaves, 2)
+            if len(leaves) == 1:
+                self.path_objects[obj] = self.draw_path(leaves, 1)
+            elif len(leaves) == 2:
+                self.path_objects[obj] = self.draw_path(leaves, 2)
             else:
-                self.path_objects[obj] = self.draw_path(tree.leaves, 3)
+                self.path_objects[obj] = self.draw_path(leaves, 3)
 
     def draw_path(self, leaves: list, nb_leaves: int):
         """
