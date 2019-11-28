@@ -65,11 +65,67 @@ class Game:
                 break
         return path
 
+    def test_position(tree: "Tree", hero: "Hero", direction: str):
+        if self.move_possible(tree, hero.path, direction):
+            if self.test_victory(maze, hero):
+                self.victory = True
+            if self.test_defeat(hero, direction):
+                self.defeat = True
+            self.test_item(hero, direction)
 
-    def test_victory(self, hero):
-        if (hero.path == self.path_enemy) and (
-            hero.items == {"needle", "tube", "ether"}
-        ):
+    def move_possible(tree: "Tree", hero: "Hero", direction: str):
+        """
+        input :
+            - tree : maze as a tree
+            - path : the current path of the hero
+            - direction : the potential next_step
+        output:
+            True if the node exist, False otherwise
+        """
+        current = tree.huffman_traversal(hero.path)
+
+        if direction == "l":
+            next_cell = current.left
+            if next_cell.data:
+                hero.path += "l"
+                return True
+            else:
+                return False
+        elif direction == "r":
+            next_cell = current.right
+            if next_cell.data:
+                hero.path += "r"
+                return True
+            else:
+                return False
+        elif direction == "u":
+            next_cell == current.up
+            if next_cell.data:
+                hero.path += "u"
+                return True
+            else:
+                return False
+        elif direction == "d":
+            next_cell = current.down
+            if next_cell.data:
+                hero.path += "d"
+                return True
+            else:
+                return False
+
+    def test_victory(hero: "Hero") -> bool:
+        if hero.path == self.path_enemy and len(hero.items) == 3:
             return True
         else:
             return False
+
+    def test_defeat(hero: "Hero") -> bool:
+        if hero.path == self.path_enemy and len(hero.items) < 3:
+            return True
+        else:
+            return False
+
+    def test_item(hero: "Hero"):
+        for item, path in self.path_objects.items():
+            if hero.path == path:
+                hero.add_item(item)

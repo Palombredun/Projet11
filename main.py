@@ -1,53 +1,41 @@
-import pygame
-from pygame.locals import *
-
 from app.models.hero import Hero
 from app.models.labyrinth import Labyrinth
 
 from app.controllers.game import Game
 
-#from app.views.display import Display
+# from app.views.display import Display
 
 
 game = Game()
 maze = Labyrinth()
 game.place_enemy(maze.tree.leaves)
-game.place_objects(maze.tree)
-print("\npath objects :", game.path_objects)
-print("path enemy : ", game.path_enemy)
+game.place_objects(maze.tree.leaves)
 
 macgyver = Hero()
-#display = Display(maze, macgyver, game.path_enemy, game.path_objects)
+display = Display()
+
+display.draw_maze(maze.tree, macgyver.path, game.path_enemy, game.path_objects)
 
 
-#while game.is_victory(macgyver) is False:
-#    for event in pygame.event.get():
-#        if event.type == pygame.KEY_DOWN:
-#            if event.type == pygame.K_q:
-#                break
-#            else:
-#                if event.type == pygame.K_LEFT:
-#                    if maze.test_position(macgyver, "l"):
-#                        if macgyver.path in game.path_objects:
-#                            macgyver.add_item(item)
-#                            game.test_victory(macgyver)
-#                        macgyver.path += "l"
-#                elif event.type == pygame.K_RIGHT:
-#                    if maze.test_position(macgyver, "r"):
-#                        if macgyver.path in game.path_objects:
-#                            macgyver.add_item(item)
-#                            game.test_victory(macgyver)
-#                        macgyver.path += "r"
-#                elif event.type == pygame.K_UP:
-#                    if maze.test_position(macgyver, "u"):
-#                        if macgyver.path in game.path_objects:
-#                            macgyver.add_item(item)
-#                            game.test_victory(macgyver)
-#                        macgyver.path += "u"
-#                elif event.type == pygame.K_DOWN:
-#                    if maze.test_position(macgyver, "d"):
-#                        if macgyver.path in game.path_objects:
-#                            macgyver.add_item(item)
-#                            game.test_victory(macgyver)
-#                        macgyver.path += "d"
-#                display.update(hero)
+while game.victory is False or game.defeat is False:
+    # get keys touched by player
+    for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN:
+            if event.type == pygame.KEY_Q:
+                break
+            elif event.type == pygame.KEY_LEFT:
+                move = game.test_position(maze, macgyver, "left")
+                if move:
+                    hero.path += "l"
+            elif event.type == pygame.KEY_RIGHT:
+                move = game.test_position(maze, macgyver, "right")
+                if move:
+                    hero.path += "r"
+            elif event.type == pygame.KEY_UP:
+                move = game.test_position(maze, macgyver, "up")
+                if move:
+                    hero.path += "u"
+            elif event.type == pygame.KEY_DOWN:
+                move = game.test_position(maze.tree, macgyver, "down")
+                if move:
+                    hero.path += "d"
