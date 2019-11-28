@@ -1,7 +1,8 @@
-mport pygame
+import pygame
 from pygame.locals import *
 
 import config.settings as cst
+
 
 class Display:
     def __init__():
@@ -23,19 +24,26 @@ class Display:
         self.up_down = pygame.image.load("resources/up_down.jpg").convert()
         self.up_right = pygame.image.load("resources/up_right.jpg").convert()
 
-        self.left_right_down = pygame.image.load("resources/left_right_down.jpg").convert()
-        self.left_up_down = pygame.image.load("resources/left_up_down.jpg").convert()
-        self.left_up_right = pygame.image.load("resources/left_up_right.jpg").convert()
-        self.up_right_down = pygame.image.load("resources/up_right_down.jpg").convert()
-        
+        self.left_right_down = pygame.image.load(
+            "resources/left_right_down.jpg"
+        ).convert()
+        self.left_up_down = pygame.image.load(
+            "resources/left_up_down.jpg"
+        ).convert()
+        self.left_up_right = pygame.image.load(
+            "resources/left_up_right.jpg"
+        ).convert()
+        self.up_right_down = pygame.image.load(
+            "resources/up_right_down.jpg"
+        ).convert()
 
     def draw_maze(self, tree: "Tree", hero: "Hero"):
         pygame.init()
-        pygame.display.set_mode((64*cst.LENGTH, 64*cst.WIDTH))
+        pygame.display.set_mode((64 * cst.LENGTH, 64 * cst.WIDTH))
 
         i, j = 0
         for leaf_path in tree.leafs:
-            for index in range(len(leaf_path)+1):
+            for index in range(len(leaf_path) + 1):
                 current_path = leaf_path[:index]
                 if current_path[-1] == "l":
                     j += -1

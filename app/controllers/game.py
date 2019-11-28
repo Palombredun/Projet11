@@ -17,7 +17,7 @@ class Game:
             self.path_enemy = leaves[:index]
             self.path_used.append(self.path_enemy)
         else:
-            self.path_enemy = ''.join(choices(leaves))
+            self.path_enemy = "".join(choices(leaves))
             self.path_used.append(self.path_enemy)
 
     def place_objects(self, leaves: list):
@@ -56,7 +56,7 @@ class Game:
                     break
             return path
 
-        i = randint(0, nb_leaves-1)
+        i = randint(0, nb_leaves - 1)
         path = ""
         while True:
             index = randint(0, len(leaves[i]))
