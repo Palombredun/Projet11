@@ -5,7 +5,10 @@ import config.settings as cst
 
 
 class Display:
-    def __init__():
+    def __init__(self):
+        pygame.init()
+        self.view = pygame.display.set_mode((64*cst.LENGTH, 64*cst.WIDTH))
+
         self.macgyver = pygame.image.load("resources/MacGyver.png").convert()
         self.enemy = pygame.image.load("resources/enemy.png").convert()
         self.ether = pygame.image.load("resources/ether.png").convert()
@@ -37,13 +40,10 @@ class Display:
             "resources/up_right_down.jpg"
         ).convert()
 
-    def draw_maze(self, tree: "Tree", hero: "Hero"):
-        pygame.init()
-        pygame.display.set_mode((64 * cst.LENGTH, 64 * cst.WIDTH))
-
-        i, j = 0
-        for leaf_path in tree.leafs:
-            for index in range(len(leaf_path) + 1):
+    def draw_maze(self, tree: "Tree", hero: "Hero", path_enemy: str, path_object: str, ):
+        i, j = 0, 0
+        for leaf_path in tree.leaves:
+            for index in range(1, len(leaf_path) + 2):
                 current_path = leaf_path[:index]
                 if current_path[-1] == "l":
                     j += -1
@@ -56,21 +56,35 @@ class Display:
 
                 current = tree.huffman_traversal(current_path)
 
-                if current.left and current.right:
-                    pass
-                if current.left and current.up:
-                    pass
-                if current.left and current.down:
-                    pass
-                if current.up and current.right:
-                    pass
-                if current.up and current.down:
-                    pass
-                if current.left and current.right and current.down:
-                    pass
-                if current.left and current.up and current.down:
-                    pass
                 if current.left and current.up and current.right:
-                    pass
-                if current.up and current.right and current.down:
-                    pass
+                    self.view.blit(self.left_up_right, (64*i, 64*j))
+                elif current.left and current.up and current.down:
+                    self.view.blit(self.left_up_down, (64*i, 64*j))
+                elif current.left and current.right and current.down:
+                    self.view.blit(self.left_right_down, (64*i, 64*j))
+                elif current.up and current.right and current.down:
+                    self.view.blit(self.up_right_down, (64*i, 64*j))
+
+                elif current.left and current.up:
+                    self.view.blit(self.left_up, (64*i, 64*j))
+                elif current.left and current.right:
+                   self.view.blit( self.left_right, (64*i, 64*j))
+                elif current.left and current.down:
+                    self.view.blit(self.left_down, (64*i, 64*j))
+                elif current.up and current.right:
+                    self.view.blit(self.up_right, (64*i, 64*j))
+                elif current.up and current.down:
+                    self.view.blit(self.up_down, (64*i, 64*j))
+                elif current.right and current.down:
+                    self.view.blit(self.right_down, (64*i, 64*j))
+
+                elif current.left:
+                    self.view.blit(self.left, (64*i, 64*j))
+                elif current.right:
+                    self.view.blit(self.right, (64*i, 64*j))
+                elif current.up:
+                    self.view.blit(self.up, (64*i, 64*j))
+                elif current.down:
+                    self.view.blit(self.down, (64*i, 64*j))
+                
+        pygame.display.flip()

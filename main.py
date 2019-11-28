@@ -1,9 +1,12 @@
+import pygame
+from pygame.locals import *
+
 from app.models.hero import Hero
 from app.models.labyrinth import Labyrinth
 
 from app.controllers.game import Game
 
-# from app.views.display import Display
+from app.views.display import Display
 
 
 game = Game()
@@ -21,7 +24,7 @@ while game.victory is False or game.defeat is False:
     # get keys touched by player
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
-            if event.type == pygame.KEY_Q:
+            if event.type == pygame.K_q:
                 break
             elif event.type == pygame.KEY_LEFT:
                 move = game.test_position(maze, macgyver, "left")
