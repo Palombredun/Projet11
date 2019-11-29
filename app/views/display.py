@@ -34,10 +34,8 @@ class Display:
         self.left_up_right = pygame.image.load("resources/left_up_right.jpg").convert()
         self.up_right_down = pygame.image.load("resources/up_right_down.jpg").convert()
 
-    def draw_maze(
-        self, tree: "Tree", hero: "Hero", path_enemy: str, path_object: str,
-    ):
-        # print the first cell
+    def draw_maze(self, tree: "Tree"):
+
         if tree.root.right and not tree.root.down:
             self.view.blit(self.right, (0, 0))
         elif not tree.root.right and tree.root.down:
@@ -94,3 +92,41 @@ class Display:
                     self.view.blit(self.down, (32 * i, 32 * j))
 
         pygame.display.flip()
+
+    def draw_hero(self):
+        self.view.blit(self.macgyver, (0, 0))
+        pygame.display.flip()
+
+    def draw_items(self, path_items: dict):
+        for item, path in path_items.items():
+            i, j = 0, 0
+            for direction in path:
+                if direction == "l":
+                    i += -1
+                elif direction == "r":
+                    i += 1
+                elif direction == "u":
+                    j += -1
+                elif direction == "d":
+                    j += 1
+            if item == "ether":
+                self.view.blit(self.ether, (32*i, 32*j))
+            if item == "needle":
+                self.view.blit(self.needle, (32*i, 32*j))
+            if item == "tube":
+                self.view.blit(self.tube, (32*i, 32*j))
+        pygame.display.flip()
+
+    def draw_enemy(self, path_enemy: str):
+        for direction in path_enemy:
+            i, j = 0, 0
+            if direction == "l":
+                i += -1
+            elif direction == "r":
+                i += 1
+            elif direction == "u":
+                j += -1
+            elif direction == "d":
+                j += 1
+        self.view.blit(self.enemy, (32*i, 32*j))
+        self.display.flip()
