@@ -28,13 +28,14 @@ class Labyrinth:
         """
         pos = Position(0, 0)
         path = Path("")
-        visited_cells = set((pos.x, pos.y))
+        visited_cells = set()
+        visited_cells.add((pos.x, pos.y))
         grid = set([(x, y) for x in range(self.length) for y in range(self.width)])
         stack = [(pos.x, pos.y)]
         leaves = set()
 
-        while len(visited_cells) < self.length * self.width:
-            directions = []
+        while stack:
+            directions = []        
             if (pos.x - 1, pos.y) not in visited_cells and (pos.x - 1, pos.y) in grid:
                 directions.append((-1, 0))
             if (pos.x + 1, pos.y) not in visited_cells and (pos.x + 1, pos.y) in grid:
@@ -56,4 +57,5 @@ class Labyrinth:
             else:
                 leaves.add(path.path)
                 pos, path = stack.pop()
+
         self.tree.leaves= list(leaves)
