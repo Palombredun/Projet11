@@ -20,25 +20,30 @@ display = Display()
 display.draw_maze(maze.tree)
 display.draw_hero()
 display.draw_items(game.path_objects)
+display.draw_enemy(game.path_enemy)
 
 
-while game.victory is False or game.defeat is False:
-    # get keys touched by player
+
+
+while game.defeat is False:
     for event in pygame.event.get():
-        if event.type == pygame.KEYDOWN:
-            elif event.type == pygame.K_LEFT:
-                move = game.test_position(maze, macgyver, "left")
-                if move:
-                    hero.path += "l"
-            elif event.type == pygame.K_RIGHT:
-                move = game.test_position(maze, macgyver, "right")
-                if move:
-                    hero.path += "r"
-            elif event.type == pygame.K_UP:
-                move = game.test_position(maze, macgyver, "up")
-                if move:
-                    hero.path += "u"
-            elif event.type == pygame.K_DOWN:
-                move = game.test_position(maze.tree, macgyver, "down")
-                if move:
-                    hero.path += "d"
+        if event.type == pygame.QUIT:
+            game.defeat = True
+
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT]:
+        move = game.test_position(maze.tree, macgyver, "left")
+        if move:
+            macgyver.path += "l"
+    if keys[pygame.K_RIGHT]:
+        move = game.test_position(maze.tree, macgyver, "right")
+        if move:
+            macgyver.path += "r"
+    if keys[pygame.K_UP]:
+        move = game.test_position(maze.tree, macgyver, "up")
+        if move:
+            macgyver.path += "u"
+    if keys[pygame.K_DOWN]:
+        move = game.test_position(maze.tree, macgyver, "down")
+        if move:
+            macgyver.path += "d"

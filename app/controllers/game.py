@@ -7,13 +7,20 @@ from app.models.hero import Hero
 class Game:
     def __init__(self):
         self.victory = False
+        self.defeat = False
         self.path_enemy = str()
         self.path_objects = {}
         self.path_used = []
 
     def place_enemy(self, leaves: list):
+        """
+        input :
+            - list of the path to the leaves of the tree
+        If the tree possesses less than 4 leaves, the enemy is randomly
+        placed on one of them.
+        """
         if len(leaves) < 4:
-            index = choice(len(leaves[0]))
+            index = randint(0, len(leaves[0]))
             self.path_enemy = leaves[:index]
             self.path_used.append(self.path_enemy)
         else:
@@ -65,50 +72,45 @@ class Game:
                 break
         return path
 
-    def test_position(tree: "Tree", hero: "Hero", direction: str):
+    def test_position(self, tree: "Tree", hero: "Hero", direction: str):
         if self.move_possible(tree, hero.path, direction):
             if self.test_victory(maze, hero):
                 self.victory = True
             if self.test_defeat(hero, direction):
                 self.defeat = True
             self.test_item(hero, direction)
+            return True
+        else:
+            return False
 
-    def move_possible(tree: "Tree", hero: "Hero", direction: str):
+    def move_possible(self, tree: "Tree", hero: "Hero", direction: str):
         """
         input :
             - tree : maze as a tree
             - path : the current path of the hero
             - direction : the potential next_step
         output:
-            True if the node exist, False otherwise
+            True if the node exists, False otherwise
         """
         current = tree.huffman_traversal(hero.path)
 
         if direction == "l":
-            next_cell = current.left
-            if next_cell.data:
-                hero.path += "l"
+            if current.left:
                 return True
             else:
                 return False
         elif direction == "r":
-            next_cell = current.right
-            if next_cell.data:
-                hero.path += "r"
+            if current.right:
                 return True
             else:
                 return False
         elif direction == "u":
-            next_cell == current.up
-            if next_cell.data:
-                hero.path += "u"
+            if current.up:
                 return True
             else:
                 return False
         elif direction == "d":
-            next_cell = current.down
-            if next_cell.data:
-                hero.path += "d"
+            if current.down:
                 return True
             else:
                 return False

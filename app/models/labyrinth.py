@@ -1,4 +1,4 @@
-from random import choice, seed
+from random import choice
 
 import config.settings as constants
 
@@ -31,6 +31,7 @@ class Labyrinth:
         visited_cells = set((pos.x, pos.y))
         grid = set([(x, y) for x in range(self.length) for y in range(self.width)])
         stack = [(pos.x, pos.y)]
+        leaves = set()
 
         while len(visited_cells) < self.length * self.width:
             directions = []
@@ -43,14 +44,16 @@ class Labyrinth:
             if (pos.x, pos.y + 1) not in visited_cells and (pos.x, pos.y + 1) in grid:
                 directions.append((0, 1))
 
-            if len(directions) > 0:
+            if len(directions) > 0: 
                 next_dir = choice(directions)
                 self.tree.add_node(path.path, next_dir, "p")
                 pos += next_dir
                 path += next_dir
 
-                stack.append((pos, path))
                 visited_cells.add((pos.x, pos.y))
+                stack.append((pos, path))
+            
             else:
-                self.tree.leaves.append(path.path)
+                leaves.add(path.path)
                 pos, path = stack.pop()
+        self.tree.leaves= list(leaves)
