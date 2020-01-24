@@ -9,7 +9,7 @@ class Game:
         self.victory = False
         self.defeat = False
         self.path_enemy = str()
-        self.path_objects = {}
+        self.path_items = {}
         self.path_used = []
 
     def place_enemy(self, leaves: list):
@@ -37,11 +37,11 @@ class Game:
         """
         for obj in ["ether", "needle", "tube"]:
             if len(leaves) == 1:
-                self.path_objects[obj] = self._draw_path(leaves, 1)
+                self.path_items[obj] = self._draw_path(leaves, 1)
             elif len(leaves) == 2:
-                self.path_objects[obj] = self._draw_path(leaves, 2)
+                self.path_items[obj] = self._draw_path(leaves, 2)
             else:
-                self.path_objects[obj] = self._draw_path(leaves, 3)
+                self.path_items[obj] = self._draw_path(leaves, 3)
 
     def _draw_path(self, leaves: list, nb_leaves: int):
         """
@@ -73,26 +73,7 @@ class Game:
         return path
 
     def test_position(self, tree: "Tree", hero: "Hero", direction: str):
-        if self.move_possible(tree, hero.path, direction):
-            if self.test_victory(maze, hero):
-                self.victory = True
-            if self.test_defeat(hero, direction):
-                self.defeat = True
-            self.test_item(hero, direction)
-            return True
-        else:
-            return False
-
-    def move_possible(self, tree: "Tree", hero: "Hero", direction: str):
-        """
-        input :
-            - tree : maze as a tree
-            - path : the current path of the hero
-            - direction : the potential next_step
-        output:
-            True if the node exists, False otherwise
-        """
-        current = tree.huffman_traversal(hero.path)
+        current = tree.huffman_traversal(hero.path.path)
 
         if direction == "l":
             if current.left:
@@ -121,13 +102,23 @@ class Game:
         else:
             return False
 
-    def test_defeat(hero: "Hero") -> bool:
+    def test_defeat(self, hero: "Hero") -> bool:
         if hero.path == self.path_enemy and len(hero.items) < 3:
             return True
         else:
             return False
 
-    def test_item(hero: "Hero"):
-        for item, path in self.path_objects.items():
-            if hero.path == path:
-                hero.add_item(item)
+    def test_item(self, hero: "Hero"):
+        """
+        If the hero's path equals one of the objects, delete it from
+        the dictionnary and return True. Else, return False.
+        """
+        key_list = list(self.path_items.keys())
+        val_list = list(self.path_items.values())
+        
+        if hero.path in val_list:
+            key = key_list[val_list.index(hero.path)]
+            del self.path_items[key]
+            return True
+        else:
+            return False

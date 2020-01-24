@@ -19,31 +19,36 @@ display = Display()
 
 display.draw_maze(maze.tree)
 display.draw_hero()
-display.draw_items(game.path_objects)
+display.draw_items(game.path_items)
 display.draw_enemy(game.path_enemy)
 
 
-
-
-while game.defeat is False:
+while (game.victory == False) and (game.defeat == False):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game.defeat = True
 
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_LEFT]:
-        move = game.test_position(maze.tree, macgyver, "left")
-        if move:
-            macgyver.path += "l"
-    if keys[pygame.K_RIGHT]:
-        move = game.test_position(maze.tree, macgyver, "right")
-        if move:
-            macgyver.path += "r"
-    if keys[pygame.K_UP]:
-        move = game.test_position(maze.tree, macgyver, "up")
-        if move:
-            macgyver.path += "u"
-    if keys[pygame.K_DOWN]:
-        move = game.test_position(maze.tree, macgyver, "down")
-        if move:
-            macgyver.path += "d"
+    if (keys[pygame.K_LEFT] or
+        keys[pygame.K_RIGHT] or
+        keys[pygame.K_UP] or
+        keys[pygame.K_DOWN]):
+        if keys[pygame.K_LEFT]:
+            direction = "l"
+        if keys[pygame.K_RIGHT]:
+            direction = "r"
+        if keys[pygame.K_UP]:
+            direction = "u"
+        if keys[pygame.K_DOWN]:
+            direction = "d"
+        print(direction)
+        if game.test_position(maze.tree, macgyver, direction):
+            macgyver.path += direction
+
+            if game.test_defeat(macgyver):
+                game.defeat = True
+            if game.test_victory(macgyver):
+                game.victory = True
+            if game.test_item(game.path_items, macgyver):
+                hero.add_item(macgyver.path)
+            print(macgyver.path)
