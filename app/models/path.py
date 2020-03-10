@@ -16,21 +16,62 @@ class Path:
         which matches a direction (left, right, up, down). 
         It is added to the current path.    
         """
-        if direction == (1, 0):
-            new_path = self.path + "d"
+        if not self.path:
+            if isinstance(direction, tuple):
+                if direction == (-1, 0):
+                    new_path = self.path + 'd'
+    
+                if direction == (1, 0):
+                    new_path = self.path + 'u'
+        
+                if direction == (0, -1):
+                    new_path = self.path + 'l'
+        
+                if direction == (0, 1):
+                    new_path = self.path + 'r'
+            elif isinstance(direction, str):
+                new_path = self.path + direction
             return Path(new_path)
-        elif direction == (-1, 0):
-            new_path = self.path + "u"
+        
+        if isinstance(direction, tuple):
+            if direction == (1, 0):
+                new_path = self.path + "d"
+                return Path(new_path)
+            elif direction == (-1, 0):
+                new_path = self.path + "u"
+                return Path(new_path)
+            elif direction == (0, -1):
+                new_path = self.path + "l"
+                return Path(new_path)
+            elif direction == (0, 1):
+                new_path = self.path + "r"
+                return Path(new_path)
+
+        elif isinstance(direction, str):
+            if direction == "u":
+                if self.path[-1] == "d":
+                    new_path = self.path[:-1]
+                else:
+                    new_path = self.path + direction
+            
+            elif direction == "d":
+                if self.path[-1] == "u":
+                    new_path = self.path[:-1]
+                else:
+                    new_path = self.path + direction
+            
+            elif direction == "l":
+                if self.path[-1] == "r":
+                    new_path = self.path[:-1]
+                else:
+                    new_path = self.path + direction
+            
+            elif direction == "r":
+                if self.path[-1] == "l":
+                    new_path = self.path[:-1]
+                else:
+                    new_path = self.path + direction
             return Path(new_path)
-        elif direction == (0, -1):
-            new_path = self.path + "l"
-            return Path(new_path)
-        elif direction == (0, 1):
-            new_path = self.path + "r"
-            return Path(new_path)
-        else:
-            raise ValueError("Wrong direction")
-        return self
 
     def __str__(self):
         return self.path

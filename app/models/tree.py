@@ -13,7 +13,6 @@ class Tree:
         """
         input : position of the current node
         output : node at the position in parameter
-
         The function is based on the huffman decoding algorithm, thus its name
         """
         if type(path) is not str:
@@ -48,7 +47,6 @@ class Tree:
             - direction of the new node
             - value of the node
         output: None
-
         Adds a new node at the path in parameter, in the direction
         given, with the value (type of the square)
         """
