@@ -18,7 +18,7 @@ macgyver = Hero()
 display = Display()
 
 display.draw_maze(maze.tree)
-# display.draw_hero()
+display.draw_hero()
 # display.draw_items(game.path_items)
 # display.draw_enemy(game.path_enemy)
 
