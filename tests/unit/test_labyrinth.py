@@ -1,6 +1,5 @@
 import pytest
 
-from app.models.position import Position
 from app.models.path import Path
 from app.models.labyrinth import Labyrinth
 from app.models.tree import Tree

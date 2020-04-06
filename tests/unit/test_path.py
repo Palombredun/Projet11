@@ -25,14 +25,18 @@ def test_add_direction_left(start_path):
 
 def test_add_direction_up(start_path):
     new_path = start_path + (-1, 0)
-    assert new_path.path == "u"
+    assert new_path.path == "d"
 
 
 def test_add_direction_down(start_path):
     new_path = start_path + (1, 0)
-    assert new_path.path == "d"
+    assert new_path.path == "u"
 
 
 def test_add_multiple_directions(start_path):
-    new_path = start_path + (0, 1) + (0, 1)
-    assert new_path.path == "rr"
+    new_path = start_path + (0, 1) + (0, 1) + (1, 0) + (1, 0) + (0, -1)
+    assert new_path.path == "rruul"
+
+def test_return_on_track(start_path):
+    new_path = start_path + (0, 1) + (0, -1)
+    assert new_path.path == ""

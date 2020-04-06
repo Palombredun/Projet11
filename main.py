@@ -18,9 +18,9 @@ macgyver = Hero()
 display = Display()
 
 display.draw_maze(maze.tree)
-display.draw_hero()
-display.draw_items(game.path_items)
-display.draw_enemy(game.path_enemy)
+#display.draw_hero()
+#display.draw_items(game.path_items)
+#display.draw_enemy(game.path_enemy)
 
 
 while (game.victory == False) and (game.defeat == False):
@@ -41,7 +41,7 @@ while (game.victory == False) and (game.defeat == False):
             direction = "u"
         if keys[pygame.K_DOWN]:
             direction = "d"
-        print(direction)
+
         if game.test_position(maze.tree, macgyver, direction):
             macgyver.path += direction
 
@@ -51,4 +51,3 @@ while (game.victory == False) and (game.defeat == False):
                 game.victory = True
             if game.test_item(game.path_items, macgyver):
                 hero.add_item(macgyver.path)
-            print(macgyver.path)

@@ -2,7 +2,6 @@ from random import choice
 
 import config.settings as constants
 
-from .position import Position
 from .path import Path
 from .tree import Tree
 
@@ -20,42 +19,50 @@ class Labyrinth:
 
         self.create()
 
+    def in_limits(self, cell):
+        if (cell[0] < self.length and cell[0] >= 0) and \
+           (cell[1] < self.width and cell[1] >= 0):
+            return True
+        else:
+            return False
+    
+    def unvisited_neighbors(self, visited_cells, cell):
+        neighbors = []
+        possibilities = [(cell[0]-1, cell[1]), 
+                        (cell[0]+1, cell[1]), 
+                        (cell[0], cell[1]-1), 
+                        (cell[0], cell[1]+1)]
+
+        for cell in possibilities:
+            if cell not in visited_cells and self.in_limits(cell):
+                neighbors.append(cell)
+        return neighbors
+
+
     def create(self):
         """
         output :
         The structure of a labyrinth as a Tree composed of nodes with 4 branches
         (one for each direction). It is randomly generated based on
         """
-        pos = Position(0, 0)
+        start = (0, 0)
         path = Path("")
         visited_cells = set()
-        visited_cells.add((pos.x, pos.y))
-        grid = set([(x, y) for x in range(self.length) for y in range(self.width)])
-        stack = [(pos.x, pos.y)]
-        leaves = set()
+        visited_cells.add(start)
+        stack = [(start,path),]
 
         while stack:
-            directions = []        
-            if (pos.x - 1, pos.y) not in visited_cells and (pos.x - 1, pos.y) in grid:
-                directions.append((-1, 0))
-            if (pos.x + 1, pos.y) not in visited_cells and (pos.x + 1, pos.y) in grid:
-                directions.append((1, 0))
-            if (pos.x, pos.y - 1) not in visited_cells and (pos.x, pos.y - 1) in grid:
-                directions.append((0, -1))
-            if (pos.x, pos.y + 1) not in visited_cells and (pos.x, pos.y + 1) in grid:
-                directions.append((0, 1))
-
-            if len(directions) > 0: 
-                next_dir = choice(directions)
-                self.tree.add_node(path.path, next_dir, "p")
-                pos += next_dir
-                path += next_dir
-
-                visited_cells.add((pos.x, pos.y))
-                stack.append((pos, path))
-            
+            curr, path = stack.pop()
+            neighbors = self.unvisited_neighbors(visited_cells, curr)
+            if neighbors:
+                stack.append((curr, path))
+                chosen = choice(neighbors)
+                direction = (chosen[0]-curr[0], chosen[1]-curr[1])
+                self.tree.add_node(path.path, direction, "p")
+                path += direction
+                visited_cells.add(chosen)
+                curr = chosen
+                stack.append((curr, path))
             else:
-                leaves.add(path.path)
-                pos, path = stack.pop()
-
-        self.tree.leaves= list(leaves)
+                if self.tree.is_leaf(path.path):
+                    self.tree.leaves.append(path.path)

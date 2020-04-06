@@ -34,18 +34,29 @@ class Path:
             return Path(new_path)
         
         if isinstance(direction, tuple):
+            #up
             if direction == (1, 0):
-                new_path = self.path + "d"
-                return Path(new_path)
+                if self.path[-1] == 'd':
+                    return Path(self.path[:-1])
+                return Path(self.path + "u")
+            
+            #down
             elif direction == (-1, 0):
-                new_path = self.path + "u"
-                return Path(new_path)
+                if self.path[-1] == 'u':
+                    return Path(self.path[:-1])
+                return Path(self.path + "d")
+
+            #left
             elif direction == (0, -1):
-                new_path = self.path + "l"
-                return Path(new_path)
+                if self.path[-1] == "r":
+                    return Path(self.path[:-1])
+                return Path(self.path + 'l')
+            
+            #right
             elif direction == (0, 1):
-                new_path = self.path + "r"
-                return Path(new_path)
+                if self.path[-1] == "l":
+                    return Path(self.path[:-1])
+                return Path(self.path + 'r')
 
         elif isinstance(direction, str):
             if direction == "u":
@@ -75,3 +86,6 @@ class Path:
 
     def __str__(self):
         return self.path
+
+    def __len__(self):
+        return len(self.path)
