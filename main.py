@@ -18,9 +18,9 @@ macgyver = Hero()
 display = Display()
 
 display.draw_maze(maze.tree)
-#display.draw_hero()
-#display.draw_items(game.path_items)
-#display.draw_enemy(game.path_enemy)
+# display.draw_hero()
+# display.draw_items(game.path_items)
+# display.draw_enemy(game.path_enemy)
 
 
 while (game.victory == False) and (game.defeat == False):
@@ -29,10 +29,12 @@ while (game.victory == False) and (game.defeat == False):
             game.defeat = True
 
     keys = pygame.key.get_pressed()
-    if (keys[pygame.K_LEFT] or
-        keys[pygame.K_RIGHT] or
-        keys[pygame.K_UP] or
-        keys[pygame.K_DOWN]):
+    if (
+        keys[pygame.K_LEFT]
+        or keys[pygame.K_RIGHT]
+        or keys[pygame.K_UP]
+        or keys[pygame.K_DOWN]
+    ):
         if keys[pygame.K_LEFT]:
             direction = "l"
         if keys[pygame.K_RIGHT]:

@@ -30,7 +30,9 @@ class Display:
         self.up_down = pygame.image.load("resources/up_down.jpg").convert()
         self.right_up = pygame.image.load("resources/right_up.jpg").convert()
 
-        self.left_right_down = pygame.image.load("resources/left_right_down.jpg").convert()
+        self.left_right_down = pygame.image.load(
+            "resources/left_right_down.jpg"
+        ).convert()
         self.left_up_down = pygame.image.load("resources/left_up_down.jpg").convert()
         self.left_right_up = pygame.image.load("resources/left_right_up.jpg").convert()
         self.right_up_down = pygame.image.load("resources/right_up_down.jpg").convert()
@@ -44,7 +46,7 @@ class Display:
         elif tree.root.right and tree.root.up:
             self.view.blit(self.right_up, (0, 0))
 
-        #explore the leaves to place each case
+        # explore the leaves to place each case
         for path in tree.leaves:
             current_path = ""
             i, j = 0, 0
@@ -82,8 +84,6 @@ class Display:
                     self.view.blit(self.up_down, (self.dx * i, self.dy * j))
                 elif curr.right and curr.down:
                     self.view.blit(self.right_down, (self.dx * i, self.dy * j))
-
-
 
                 elif curr.left:
                     self.view.blit(self.left, (self.dx * i, self.dy * j))
@@ -175,20 +175,20 @@ class Display:
             self.view.blit(self.left_right_down, (32 * i, 32 * j))
         elif curr.right and curr.up and curr.down:
             self.view.blit(self.right_up_down, (32 * i, 32 * j))
-        
+
         elif curr.left and curr.up:
             self.view.blit(self.left_up, (32 * i, 32 * j))
         elif curr.left and curr.right:
-            self.view.blit(self.left_right, (32 * i, 32 * j))      
+            self.view.blit(self.left_right, (32 * i, 32 * j))
         elif curr.left and curr.down:
-            self.view.blit(self.left_down, (32 * i, 32 * j))        
+            self.view.blit(self.left_down, (32 * i, 32 * j))
         elif curr.right and curr.up:
             self.view.blit(self.right_up, (32 * i, 32 * j))
         elif curr.up and curr.down:
             self.view.blit(self.up_down, (32 * i, 32 * j))
         elif curr.right and curr.down:
             self.view.blit(self.right_down, (32 * i, 32 * j))
-        
+
         elif curr.left:
             self.view.blit(self.left, (32 * i, 32 * j))
         elif curr.right:

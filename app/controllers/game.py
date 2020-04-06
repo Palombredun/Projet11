@@ -115,7 +115,7 @@ class Game:
         """
         key_list = list(self.path_items.keys())
         val_list = list(self.path_items.values())
-        
+
         if hero.path in val_list:
             key = key_list[val_list.index(hero.path)]
             del self.path_items[key]

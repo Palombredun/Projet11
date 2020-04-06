@@ -37,6 +37,7 @@ def test_add_multiple_directions(start_path):
     new_path = start_path + (0, 1) + (0, 1) + (1, 0) + (1, 0) + (0, -1)
     assert new_path.path == "rruul"
 
+
 def test_return_on_track(start_path):
     new_path = start_path + (0, 1) + (0, -1)
     assert new_path.path == ""

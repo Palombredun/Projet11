@@ -16,3 +16,4 @@ def test_init_labyrinth(base_lab):
     assert base_lab.length == constants.LENGTH
     assert base_lab.width == constants.WIDTH
     assert base_lab.tree.root.data == "p"
+    assert base_lab.tree.leaves != []

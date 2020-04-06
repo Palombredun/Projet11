@@ -19,44 +19,44 @@ class Path:
         if not self.path:
             if isinstance(direction, tuple):
                 if direction == (-1, 0):
-                    new_path = self.path + 'd'
-    
+                    new_path = self.path + "d"
+
                 if direction == (1, 0):
-                    new_path = self.path + 'u'
-        
+                    new_path = self.path + "u"
+
                 if direction == (0, -1):
-                    new_path = self.path + 'l'
-        
+                    new_path = self.path + "l"
+
                 if direction == (0, 1):
-                    new_path = self.path + 'r'
+                    new_path = self.path + "r"
             elif isinstance(direction, str):
                 new_path = self.path + direction
             return Path(new_path)
-        
+
         if isinstance(direction, tuple):
-            #up
+            # up
             if direction == (1, 0):
-                if self.path[-1] == 'd':
+                if self.path[-1] == "d":
                     return Path(self.path[:-1])
                 return Path(self.path + "u")
-            
-            #down
+
+            # down
             elif direction == (-1, 0):
-                if self.path[-1] == 'u':
+                if self.path[-1] == "u":
                     return Path(self.path[:-1])
                 return Path(self.path + "d")
 
-            #left
+            # left
             elif direction == (0, -1):
                 if self.path[-1] == "r":
                     return Path(self.path[:-1])
-                return Path(self.path + 'l')
-            
-            #right
+                return Path(self.path + "l")
+
+            # right
             elif direction == (0, 1):
                 if self.path[-1] == "l":
                     return Path(self.path[:-1])
-                return Path(self.path + 'r')
+                return Path(self.path + "r")
 
         elif isinstance(direction, str):
             if direction == "u":
@@ -64,19 +64,19 @@ class Path:
                     new_path = self.path[:-1]
                 else:
                     new_path = self.path + direction
-            
+
             elif direction == "d":
                 if self.path[-1] == "u":
                     new_path = self.path[:-1]
                 else:
                     new_path = self.path + direction
-            
+
             elif direction == "l":
                 if self.path[-1] == "r":
                     new_path = self.path[:-1]
                 else:
                     new_path = self.path + direction
-            
+
             elif direction == "r":
                 if self.path[-1] == "l":
                     new_path = self.path[:-1]

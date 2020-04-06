@@ -20,24 +20,26 @@ class Labyrinth:
         self.create()
 
     def in_limits(self, cell):
-        if (cell[0] < self.length and cell[0] >= 0) and \
-           (cell[1] < self.width and cell[1] >= 0):
+        if (cell[0] < self.length and cell[0] >= 0) and (
+            cell[1] < self.width and cell[1] >= 0
+        ):
             return True
         else:
             return False
-    
+
     def unvisited_neighbors(self, visited_cells, cell):
         neighbors = []
-        possibilities = [(cell[0]-1, cell[1]), 
-                        (cell[0]+1, cell[1]), 
-                        (cell[0], cell[1]-1), 
-                        (cell[0], cell[1]+1)]
+        possibilities = [
+            (cell[0] - 1, cell[1]),
+            (cell[0] + 1, cell[1]),
+            (cell[0], cell[1] - 1),
+            (cell[0], cell[1] + 1),
+        ]
 
         for cell in possibilities:
             if cell not in visited_cells and self.in_limits(cell):
                 neighbors.append(cell)
         return neighbors
-
 
     def create(self):
         """
@@ -49,7 +51,9 @@ class Labyrinth:
         path = Path("")
         visited_cells = set()
         visited_cells.add(start)
-        stack = [(start,path),]
+        stack = [
+            (start, path),
+        ]
 
         while stack:
             curr, path = stack.pop()
@@ -57,7 +61,7 @@ class Labyrinth:
             if neighbors:
                 stack.append((curr, path))
                 chosen = choice(neighbors)
-                direction = (chosen[0]-curr[0], chosen[1]-curr[1])
+                direction = (chosen[0] - curr[0], chosen[1] - curr[1])
                 self.tree.add_node(path.path, direction, "p")
                 path += direction
                 visited_cells.add(chosen)
