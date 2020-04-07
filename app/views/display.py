@@ -37,6 +37,78 @@ class Display:
         self.left_right_up = pygame.image.load("resources/left_right_up.jpg").convert()
         self.right_up_down = pygame.image.load("resources/right_up_down.jpg").convert()
 
+    def explanations(self):
+        print("\n\n")
+        print("*******************************************")
+        print("*                                         *")
+        print("*                                         *")
+        print("*           BIENVENUE SUR LE JEU          *")
+        print("*      AIDEZ MACGYVER À S'ÉCHAPPER !      *")
+        print("*                                         *")
+        print("*                                         *")
+        print("*******************************************")
+        print("\n")
+        print("Les règles sont les suivantes :")
+        print("  - vous incarnez MacGyver, et commencez toujours en haut à gauche")
+        print("  - votre but est de vous échapper du labyrinthe")
+        print("  - vous devez récupérer les 3 objets dispersés sur la carte")
+        print("    puis vous déplacer jusque sur l'ennemi")
+        print("  - pour vous déplacer, utilisez les flèches directionnelles du clavier")
+        print("\nBon jeu et bonne chance !")
+
+    def defeat_message(self):
+        print("\n")
+        print("Vous avez perdu. Vous n'avez pas récupéré tous les objets.\n")
+
+    def victory_message(self):
+        print("\n")
+        print("Félicitations vous avez gagné !\n")
+
+    def convert(self, path: str):
+        i, j = 0, 0
+        for direction in path:
+            if direction == "l":
+                i += -1
+            elif direction == "r":
+                i += 1
+            elif direction == "d":
+                j += -1
+            elif direction == "u":
+                j += 1
+        return i, j
+
+    def blit_case(self, node: "Node", i: int, j: int):
+        if node.left and node.right and node.up:
+            self.view.blit(self.left_right_up, (self.dx * i, self.dy * j))
+        elif node.left and node.up and node.down:
+            self.view.blit(self.left_up_down, (self.dx * i, self.dy * j))
+        elif node.left and node.right and node.down:
+            self.view.blit(self.left_right_down, (self.dx * i, self.dy * j))
+        elif node.right and node.up and node.down:
+            self.view.blit(self.right_up_down, (self.dx * i, self.dy * j))
+
+        elif node.left and node.up:
+            self.view.blit(self.left_up, (self.dx * i, self.dy * j))
+        elif node.left and node.right:
+            self.view.blit(self.left_right, (self.dx * i, self.dy * j))
+        elif node.left and node.down:
+            self.view.blit(self.left_down, (self.dx * i, self.dy * j))
+        elif node.right and node.up:
+            self.view.blit(self.right_up, (self.dx * i, self.dy * j))
+        elif node.up and node.down:
+            self.view.blit(self.up_down, (self.dx * i, self.dy * j))
+        elif node.right and node.down:
+            self.view.blit(self.right_down, (self.dx * i, self.dy * j))
+
+        elif node.left:
+            self.view.blit(self.left, (self.dx * i, self.dy * j))
+        elif node.right:
+            self.view.blit(self.right, (self.dx * i, self.dy * j))
+        elif node.up:
+            self.view.blit(self.up, (self.dx * i, self.dy * j))
+        elif node.down:
+            self.view.blit(self.down, (self.dx * i, self.dy * j))
+
     def draw_maze(self, tree: "Tree"):
         # Place the first case
         if tree.root.right and not tree.root.up:
@@ -52,48 +124,16 @@ class Display:
             i, j = 0, 0
             for direction in path:
                 current_path += direction
-
-                if direction == "d":
-                    j += -1
-                elif direction == "u":
-                    j += 1
-                elif direction == "l":
+                if direction == "l":
                     i -= 1
                 elif direction == "r":
                     i += 1
-
+                elif direction == "d":
+                    j += -1
+                elif direction == "u":
+                    j += 1
                 curr = tree.huffman_traversal(current_path)
-                if curr.left and curr.right and curr.up:
-                    self.view.blit(self.left_right_up, (self.dx * i, self.dy * j))
-                elif curr.left and curr.up and curr.down:
-                    self.view.blit(self.left_up_down, (self.dx * i, self.dy * j))
-                elif curr.left and curr.right and curr.down:
-                    self.view.blit(self.left_right_down, (self.dx * i, self.dy * j))
-                elif curr.right and curr.up and curr.down:
-                    self.view.blit(self.right_up_down, (self.dx * i, self.dy * j))
-
-                elif curr.left and curr.up:
-                    self.view.blit(self.left_up, (self.dx * i, self.dy * j))
-                elif curr.left and curr.right:
-                    self.view.blit(self.left_right, (self.dx * i, self.dy * j))
-                elif curr.left and curr.down:
-                    self.view.blit(self.left_down, (self.dx * i, self.dy * j))
-                elif curr.right and curr.up:
-                    self.view.blit(self.right_up, (self.dx * i, self.dy * j))
-                elif curr.up and curr.down:
-                    self.view.blit(self.up_down, (self.dx * i, self.dy * j))
-                elif curr.right and curr.down:
-                    self.view.blit(self.right_down, (self.dx * i, self.dy * j))
-
-                elif curr.left:
-                    self.view.blit(self.left, (self.dx * i, self.dy * j))
-                elif curr.right:
-                    self.view.blit(self.right, (self.dx * i, self.dy * j))
-                elif curr.up:
-                    self.view.blit(self.up, (self.dx * i, self.dy * j))
-                elif curr.down:
-                    self.view.blit(self.down, (self.dx * i, self.dy * j))
-
+                self.blit_case(curr, i, j)
         pygame.display.flip()
 
     def draw_hero(self):
@@ -103,30 +143,21 @@ class Display:
         self.view.blit(self.macgyver, (6, 6))
         pygame.display.flip()
 
-    def draw_items(self, path_items: dict):
+    def draw_items(self, objects: dict):
         """
         input :
             - dictionnary containing, for each item, their path
         output :
             - draw the items on top of the maze
         """
-        for item, path in path_items.items():
-            i, j = 0, 0
-            for direction in path:
-                if direction == "l":
-                    i += -1
-                elif direction == "r":
-                    i += 1
-                elif direction == "u":
-                    j += -1
-                elif direction == "d":
-                    j += 1
+        for item, path in objects.items():
+            i, j = self.convert(path)
             if item == "ether":
-                self.view.blit(self.ether, (6 + 32 * i, 6 + 32 * j))
+                self.view.blit(self.ether, (self.dx * i + 4, self.dy * j + 4))
             if item == "needle":
-                self.view.blit(self.needle, (6 + 32 * i, 6 + 32 * j))
+                self.view.blit(self.needle, (self.dx * i + 4, self.dy * j + 4))
             if item == "tube":
-                self.view.blit(self.tube, (6 + 32 * i, 6 + 32 * j))
+                self.view.blit(self.tube, (self.dx * i + 4, self.dy * j + 4))
         pygame.display.flip()
 
     def draw_enemy(self, path_enemy: str):
@@ -136,77 +167,23 @@ class Display:
         output :
             - draw the enemy on top of the maze
         """
-
-        for direction in path_enemy:
-            i, j = 0, 0
-            if direction == "l":
-                i += -1
-            elif direction == "r":
-                i += 1
-            elif direction == "u":
-                j += -1
-            elif direction == "d":
-                j += 1
-        self.view.blit(self.enemy, (6 + 32 * i, 6 + 32 * j))
+        i, j = self.convert(path_enemy)
+        self.view.blit(self.enemy, (self.dx * i + 4, self.dy * j + 4))
         pygame.display.flip()
 
-    def update(self, tree: "Tree", hero: "Hero"):
+    def update(self, tree: "Tree", hero: "Hero", previous: str):
         """
-
+        Update the visual of the game.
         """
-        curr = tree.huffman_traversal(hero.path[:-1])
+        # remove macgyver from the previous tile
+        prev = tree.huffman_traversal(previous.path)
+        i, j = self.convert(previous.path)
+        self.blit_case(prev, i, j)
 
-        i, j = 0, 0
-        for direction in hero.path[:-1]:
-            if direction == "l":
-                i += -1
-            elif direction == "r":
-                i += 1
-            elif direction == "u":
-                j += -1
-            elif direction == "d":
-                j += 1
+        # blit the new tile and make macgyver appear
+        curr = tree.huffman_traversal(hero.path)
+        i, j = self.convert(hero.path)
+        self.blit_case(curr, i, j)
+        self.view.blit(self.macgyver, (self.dx * i + 6, self.dy * j + 6))
 
-        if curr.left and curr.right and curr.up and not curr.down:
-            self.view.blit(self.left_right_up, (32 * i, 32 * j))
-        elif curr.left and curr.up and curr.down:
-            self.view.blit(self.left_up_down, (32 * i, 32 * j))
-        elif curr.left and curr.right and curr.down:
-            self.view.blit(self.left_right_down, (32 * i, 32 * j))
-        elif curr.right and curr.up and curr.down:
-            self.view.blit(self.right_up_down, (32 * i, 32 * j))
-
-        elif curr.left and curr.up:
-            self.view.blit(self.left_up, (32 * i, 32 * j))
-        elif curr.left and curr.right:
-            self.view.blit(self.left_right, (32 * i, 32 * j))
-        elif curr.left and curr.down:
-            self.view.blit(self.left_down, (32 * i, 32 * j))
-        elif curr.right and curr.up:
-            self.view.blit(self.right_up, (32 * i, 32 * j))
-        elif curr.up and curr.down:
-            self.view.blit(self.up_down, (32 * i, 32 * j))
-        elif curr.right and curr.down:
-            self.view.blit(self.right_down, (32 * i, 32 * j))
-
-        elif curr.left:
-            self.view.blit(self.left, (32 * i, 32 * j))
-        elif curr.right:
-            self.view.blit(self.right, (32 * i, 32 * j))
-        elif curr.up:
-            self.view.blit(self.up, (32 * i, 32 * j))
-        elif curr.down:
-            self.view.blit(self.down, (32 * i, 32 * j))
-
-        for direction in hero.path:
-            i, j = 0, 0
-            if direction == "d":
-                i += -1
-            elif direction == "u":
-                i += 1
-            elif direction == "l":
-                j += -1
-            elif direction == "r":
-                j += 1
-        self.view.blit(self.macgyver, (6 + 32 * i, 6 + 32 * j))
         pygame.display.flip()

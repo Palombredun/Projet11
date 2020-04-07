@@ -18,6 +18,7 @@ def leaves():
         "lrrrdldlldlruulldl",
     ]
 
+
 def test_base_game(base_game):
     assert base_game.victory == False
     assert base_game.path_enemy == str()
@@ -25,6 +26,7 @@ def test_base_game(base_game):
     assert base_game.needle == ""
     assert base_game.tube == ""
     assert base_game.ether == ""
+
 
 def test_place_enemy(base_game, leaves):
     base_game.place_enemy(leaves)
