@@ -25,10 +25,10 @@ def test_huffman_traversal(basic_tree):
     assert current.data == "path"
 
 
-def test_huffman_traversal_wrong_path_type(basic_tree):
-    with pytest.raises(TypeError):
-        basic_tree.huffman_traversal(255)
-
+def test_huffman_traversal_empty_path(basic_tree):
+    current = basic_tree.huffman_traversal("")
+    assert current == basic_tree.root
+    assert current.data == basic_tree.root.data
 
 def test_add_node_left(basic_tree):
     basic_tree.add_node(path="", direction=(0, -1), value="path")
