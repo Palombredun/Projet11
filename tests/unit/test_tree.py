@@ -30,6 +30,7 @@ def test_huffman_traversal_empty_path(basic_tree):
     assert current == basic_tree.root
     assert current.data == basic_tree.root.data
 
+
 def test_add_node_left(basic_tree):
     basic_tree.add_node(path="", direction=(0, -1), value="path")
     assert type(basic_tree.root.left) is Node

@@ -17,8 +17,6 @@ class Labyrinth:
         self.width = constants.WIDTH
         self.tree = Tree("p")
 
-        self.create()
-
     def in_limits(self, cell):
         if (cell[0] < self.length and cell[0] >= 0) and (
             cell[1] < self.width and cell[1] >= 0
@@ -41,7 +39,7 @@ class Labyrinth:
                 neighbors.append(cell)
         return neighbors
 
-    def create(self):
+    def generate_maze(self):
         """
         output :
         The structure of a labyrinth as a Tree composed of nodes with 4 branches

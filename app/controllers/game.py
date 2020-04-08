@@ -90,7 +90,7 @@ class Game:
         """
         path_items = [self.ether, self.needle, self.tube]
 
-        if hero.path in path_items:
+        if hero.path.path in path_items:
             return True
         else:
             return False

@@ -11,6 +11,7 @@ from app.views.display import Display
 
 game = Game()
 maze = Labyrinth()
+maze.generate_maze()
 game.place_enemy(maze.tree.leaves)
 game.place_objects(maze.tree.leaves)
 items = {"needle": game.needle, "tube": game.tube, "ether": game.ether}
